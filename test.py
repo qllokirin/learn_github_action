@@ -1,7 +1,8 @@
 import requests
 from datetime import datetime   
-token="f423ff08b81a499ba66f6f5f2b488ff5"
-
+import os
+token = os.environ["TOKEN"]
+print(token)
 def plus_plus():
     global token
     response = requests.post(

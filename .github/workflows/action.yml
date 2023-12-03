@@ -24,5 +24,7 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install datetime requests 
       - name: Run
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         run: python3 ./test.py
 
