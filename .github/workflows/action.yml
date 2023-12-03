@@ -1,0 +1,28 @@
+name: Action Practice
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  # a single job
+  a-job-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      - name: Install requirements
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install datetime requests 
+      - name: Run
+        run: python3 ./test.py
+
