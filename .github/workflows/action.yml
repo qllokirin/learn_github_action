@@ -33,11 +33,10 @@ jobs:
         run: |
           changes=$(git status --porcelain)
           if [ -z "$changes" ]; then
-            echo "No changes. Skipping commit and push."
-            exit 0  
+            echo "SKIP_COMMIT_AND_PUSH=true" >> $GITHUB_ENV 
           fi
       - name: commit
-        if: steps.check_changes.outcome == 'success'
+        if: env.SKIP_COMMIT_AND_PUSH != 'true'
         env:
           GIT_NAME: ${{ secrets.GIT_NAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
@@ -47,7 +46,7 @@ jobs:
           git add .
           git commit -m "Github action update at `date '+%Y-%m-%d %H:%M:%S'`."
       - name: Push changes
-        if: steps.check_changes.outcome == 'success'
+        if: env.SKIP_COMMIT_AND_PUSH != 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GB_TOKEN }}
