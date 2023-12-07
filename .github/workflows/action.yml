@@ -28,6 +28,14 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           AUTH: ${{ secrets.AUTH }}
         run: python3 ./test.py
+      - name: Check for changes
+        id: check_changes
+        run: |
+          changes=$(git status --porcelain)
+          if [ -z "$changes" ]; then
+            echo "No changes. Skipping commit and push."
+            exit 78  
+          fi
       - name: commit
         env:
           GIT_NAME: ${{ secrets.GIT_NAME }}
