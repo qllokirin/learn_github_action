@@ -34,6 +34,8 @@ jobs:
           changes=$(git status --porcelain)
           if [ -z "$changes" ]; then
             echo "SKIP_COMMIT_AND_PUSH=true" >> $GITHUB_ENV 
+          else
+            echo "SKIP_COMMIT_AND_PUSH=false" >> $GITHUB_ENV
           fi
       - name: commit
         if: env.SKIP_COMMIT_AND_PUSH != 'true'
