@@ -33,8 +33,10 @@ jobs:
         run: |
           changes=$(git status --porcelain)
           if [ -z "$changes" ]; then
+            echo "No changes. Skipping commit and push."
             echo "SKIP_COMMIT_AND_PUSH=true" >> $GITHUB_ENV 
           else
+            echo "There are some changes. Going to commit and push."
             echo "SKIP_COMMIT_AND_PUSH=false" >> $GITHUB_ENV
           fi
       - name: commit
